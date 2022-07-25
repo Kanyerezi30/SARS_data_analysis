@@ -79,3 +79,25 @@ ggplot(data4, aes(x = reorder(Spike.Variant, Spike.Variant, length), fill = Spik
   #coord_flip()
 
 ```
+
+# Monthly trends
+
+## Monthly trends of Pango lineages
+
+```{r panmon, echo=FALSE, warning=FALSE, message=FALSE}
+year <- filter(data1, Year.of.Collection != "unknown") # remove samples with unknown year of collection
+yearp <- filter(year, Pangolian.lineage != "Unassigned") # remove samples whose pangolin lineage is unassigned
+yearp$Month.of.Collection <- toupper(yearp$Month.of.Collection) # convert the month of collection to upper case
+yearp$Month.of.Collection[yearp$Month.of.Collection == "JUN"] <- "JUNE" # convert "JUN " values to "JUNE"
+yearp <- filter(yearp, Year.of.Collection == "2022") # retain samples collected in 2022 only
+level_order <- factor(yearp$Month.of.Collection, levels = c("JAN", "FEB", "MAY", "JUNE", "JULY", "DEC")) # create levels for months so that the plot shows the exact sequence and not follow alphabetical order
+ggplot(yearp, aes(x = level_order, fill = Pangolian.lineage)) +
+  geom_bar(width = 0.9) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  xlab("Pango lineage") #+
+  #geom_text(stat = 'count', aes(label=..count..), vjust=0) +
+  #coord_flip() +
+  # facet_wrap(~Year.of.Collection) # do the plotting
+
+```
