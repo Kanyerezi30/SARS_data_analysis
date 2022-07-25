@@ -34,3 +34,21 @@ data1 <- read.xlsx("./geno_sars.xlsx", sheetIndex = 1) # read in the data
 
 # data1$Pangolian.lineage[data1$Pangolian.lineage == "BA.4.1"] <- "BA.4"
 ```
+
+# Prevalence
+
+## Prevalence by Pango lineage
+
+```{r pang, echo=FALSE, warning=FALSE, message=FALSE}
+data2 <- filter(data1, Pangolian.lineage != "Unassigned") # exclude the unassigned samples
+ggplot(data2, aes(x = reorder(Pangolian.lineage, Pangolian.lineage, length), fill = Pangolian.lineage)) +
+  geom_bar(width = 0.9) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  xlab("Pango lineage") +
+  geom_text(stat = 'count', aes(label=..count..), vjust=-0.5) # do the bar plot
+  #geom_text(stat = 'count', aes(label=..count..), vjust=0) +
+  #coord_flip()
+#View(data1)
+
+```
