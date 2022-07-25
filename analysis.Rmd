@@ -216,3 +216,27 @@ ggplot(yearpdg, aes(x = Gender, fill = Pangolian.lineage)) +
   #geom_text(stat = 'count', aes(label=..count..), vjust=0)
   #coord_flip() +
 ```
+
+## Nextclade lineage distribution within Gender
+
+```{r nextggen, echo=FALSE, message=FALSE, warning=FALSE}
+gendern <- filter(data1, Gender != "unknown") # remove samples whose gender is unknown
+yearndg <- filter(gendern, Nextclade.clade != "Unassigned") # remove samples whose nextclade lineages are unassigned
+yearndg$Gender <- toupper(yearndg$Gender) # convert gender to upper case
+
+yearndg$Gender[yearndg$Gender == "FEMALE "] <- "FEMALE" # replace "FEMALE " values with "FEMALE"
+yearndg$Gender[yearndg$Gender == "MALE "] <- "MALE" # replace "MALE " values with "MALE"
+
+# yearpd <- filter(yearpd, District.of.collection != "UNKNOWN")
+# yearpd$District.of.collection[yearpd$District.of.collection == "KAMPLA"] <- "KAMPALA"
+
+# yearpd$District.of.collection[yearpd$District.of.collection == "JINJA "] <- "JINJA"
+# yearp$Month.of.Collection[yearp$Month.of.Collection == "JUN"] <- "JUNE"
+ggplot(yearndg, aes(x = Gender, fill = Nextclade.clade)) +
+  geom_bar(width = 0.4) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  xlab("Nextclade lineage")#+
+  #geom_text(stat = 'count', aes(label=..count..), vjust=0)
+  #coord_flip() +
+```
