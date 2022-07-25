@@ -52,3 +52,16 @@ ggplot(data2, aes(x = reorder(Pangolian.lineage, Pangolian.lineage, length), fil
 #View(data1)
 
 ```
+
+## Prevalence of nextclade lineage
+
+```{r next, echo=FALSE, message=FALSE, warning=FALSE}
+data3 <- filter(data1, Nextclade.clade != "Unassigned") # remove the unassigned samples for nextclade
+ggplot(data3, aes(x = reorder(Nextclade.clade, Nextclade.clade, length), fill = Nextclade.clade)) +
+  geom_bar(width = 0.9) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(vjust = 0.5, hjust = 1)) +
+  xlab("Nextclade lineage") +
+  geom_text(stat = 'count', aes(label=..count..), vjust=-0.5) #+
+  #coord_flip() # do the bar plotting
+```
