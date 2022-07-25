@@ -146,3 +146,26 @@ ggplot(years, aes(x = reorder(Spike.Variant, Spike.Variant, length), fill = Mont
   facet_wrap(~Year.of.Collection)
 
 ```
+
+# District
+
+## Pango lineage trends by district
+
+```{r pandis, echo=FALSE, warning=FALSE, message=FALSE}
+# year <- filter(data1, Year.of.Collection != "unknown")
+yearpd <- filter(data1, Pangolian.lineage != "Unassigned") # remove samples whose pangolin lineage is unassigned
+yearpd$District.of.collection <- toupper(yearpd$District.of.collection) # convert the month of collection to upper case
+yearpd <- filter(yearpd, District.of.collection != "UNKNOWN") # remove samples whose district of collection is unknown
+yearpd$District.of.collection[yearpd$District.of.collection == "KAMPLA"] <- "KAMPALA" # replace "KAMPLA" values with "KAMPALA"
+
+yearpd$District.of.collection[yearpd$District.of.collection == "JINJA "] <- "JINJA" # replace "JINJA " values with "JINJA"
+# yearp$Month.of.Collection[yearp$Month.of.Collection == "JUN"] <- "JUNE"
+ggplot(yearpd, aes(x = District.of.collection, fill = Pangolian.lineage)) +
+  geom_bar(width = 0.9) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  xlab("Pango lineage")#+
+  #geom_text(stat = 'count', aes(label=..count..), vjust=0)
+  #coord_flip() +
+
+```
