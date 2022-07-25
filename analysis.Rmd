@@ -169,3 +169,24 @@ ggplot(yearpd, aes(x = District.of.collection, fill = Pangolian.lineage)) +
   #coord_flip() +
 
 ```
+
+## Nextclade lineage by district
+
+```{r nextdis, echo=FALSE, warning=FALSE, message=FALSE}
+# year <- filter(data1, Year.of.Collection != "unknown")
+yearnd <- filter(data1, Nextclade.clade != "Unassigned") # remove samples whose nextclade lineages are unassigned
+yearnd$District.of.collection <- toupper(yearnd$District.of.collection) # convert the districts of collection to upper case
+yearnd <- filter(yearnd, District.of.collection != "UNKNOWN") # remove samples whose district of collection is unknown
+yearnd$District.of.collection[yearnd$District.of.collection == "KAMPLA"] <- "KAMPALA" # replace "KAMPLA" values with "KAMPALA"
+
+yearnd$District.of.collection[yearnd$District.of.collection == "JINJA "] <- "JINJA" # replace "JINJA " values with "JINJA"
+# yearp$Month.of.Collection[yearp$Month.of.Collection == "JUN"] <- "JUNE"
+ggplot(yearnd, aes(x = District.of.collection, fill = Nextclade.clade)) +
+  geom_bar(width = 0.9) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  xlab("Nextclade lineage")#+
+  #geom_text(stat = 'count', aes(label=..count..), vjust=0)
+  #coord_flip() +
+
+```
