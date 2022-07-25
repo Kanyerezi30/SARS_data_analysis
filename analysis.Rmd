@@ -9,3 +9,28 @@ output:
     number_sections: true
 ---
 
+\newpage
+
+```{r setup, include=FALSE}
+setwd("~/SARS_data_analysis/") # set the working directory
+
+getwd() # confirm the working directory
+list.files() # check the contents of the directory
+
+# Load the packages needed
+library(tidyverse)
+library(xlsx)
+
+data1 <- read.xlsx("./geno_sars.xlsx", sheetIndex = 1) # read in the data
+#data1$Pangolian.lineage[data1$Pangolian.lineage == "BA.1.1.15" | data1$Pangolian.lineage == "BA.1.1.4" | data1$Pangolian.lineage == "BA.1.15" | data1$Pangolian.lineage == "BA.1.1.1" | data1$Pangolian.lineage == "BA.1.1.18" | data1$Pangolian.lineage == "BA.1.1.2" | data1$Pangolian.lineage == "BA.1.113"] <- "BA.1.1"
+
+# data1$Pangolian.lineage[data1$Pangolian.lineage == "BA.1.617.2" | data1$Pangolian.lineage == "BA.1.2" | data1$Pangolian.lineage == "BA.1.9" | data1$Pangolian.lineage == "B.1.617.2" | data1$Pangolian.lineage == "BA.1.14.1" | data1$Pangolian.lineage == "BA.1.13"] <- "BA.1"
+
+# data1$Pangolian.lineage[data1$Pangolian.lineage == "BA.5.2.1"] <- "BA.5"
+
+# data1$Pangolian.lineage[data1$Pangolian.lineage == "BA.2.2"] <- "BA.2"
+
+# data1$Pangolian.lineage[data1$Pangolian.lineage == "AY.46.4"] <- "AY.46"
+
+# data1$Pangolian.lineage[data1$Pangolian.lineage == "BA.4.1"] <- "BA.4"
+```
