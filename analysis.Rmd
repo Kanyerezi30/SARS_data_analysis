@@ -65,3 +65,17 @@ ggplot(data3, aes(x = reorder(Nextclade.clade, Nextclade.clade, length), fill = 
   geom_text(stat = 'count', aes(label=..count..), vjust=-0.5) #+
   #coord_flip() # do the bar plotting
 ```
+
+## Prevalence for spike variants
+
+```{r spike, echo=FALSE, message=FALSE, warning=FALSE}
+data4 <- filter(data1, Spike.Variant != "Unassigned") # remove the unassigned samples for the spike variants
+ggplot(data4, aes(x = reorder(Spike.Variant, Spike.Variant, length), fill = Spike.Variant)) +
+  geom_bar(width = 0.4) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(vjust = 0.5, hjust = 1)) +
+  xlab("Spike Variant") +
+  geom_text(stat = 'count', aes(label=..count..), vjust=-0.5) #+
+  #coord_flip()
+
+```
