@@ -129,3 +129,20 @@ ggplot(yearn, aes(x = level_order, fill = Nextclade.clade)) +
   #coord_flip() +
 #  facet_wrap(Month.of.Collection~Year.of.Collection)
 ```
+
+## Monthly trends of spike variants
+
+```{r spimon, echo=FALSE, warning=FALSE, message=FALSE}
+years <- filter(year, Spike.Variant != "Unassigned") # remove samples whose spike variant is unassigned
+years$Month.of.Collection <- toupper(years$Month.of.Collection) # convert the month of collection to upper case
+years$Month.of.Collection[years$Month.of.Collection == "JUN"] <- "JUNE" # replace "JUN" values with "JUNE"
+ggplot(years, aes(x = reorder(Spike.Variant, Spike.Variant, length), fill = Month.of.Collection)) +
+  geom_bar(width = 0.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  xlab("Spike Variant") +
+  geom_text(stat = 'count', aes(label=..count..), vjust=0) +
+  coord_flip() +
+  facet_wrap(~Year.of.Collection)
+
+```
