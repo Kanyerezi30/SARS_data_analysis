@@ -101,3 +101,31 @@ ggplot(yearp, aes(x = level_order, fill = Pangolian.lineage)) +
   # facet_wrap(~Year.of.Collection) # do the plotting
 
 ```
+
+## Monthly trends of Nextclade lineages
+
+```{r nextmon, echo=FALSE, warning=FALSE, message=FALSE}
+# year <- filter(data1, Year.of.Collection != "unknown")
+yearn <- filter(year, Nextclade.clade != "Unassigned") # remove samples whose nextclade lineage is unassigned
+yearn$Month.of.Collection <- toupper(yearn$Month.of.Collection) # convert the months to upper case
+yearn$Month.of.Collection[yearn$Month.of.Collection == "JUN"] <- "JUNE" # convert "JUN " to "JUNE" values
+yearn <- filter(yearn, Year.of.Collection == "2022") # retain only samples collected in 2022
+level_order <- factor(yearn$Month.of.Collection, levels = c("JAN", "FEB", "MAY", "JUNE", "JULY", "DEC")) # convert the month of collection to factors and create levels for a sensible display
+#yearn <- filter(yearn, Year.of.Collection == "2022")
+ggplot(yearn, aes(x = level_order, fill = Nextclade.clade)) +
+  geom_bar(width = 0.9) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  xlab("Nextclade lineage") #+
+  #geom_text(stat = 'count', aes(label=..count..), vjust=0) +
+  #coord_flip() +
+  #facet_wrap(~Year.of.Collection)
+# ggplot(yearn, aes(x = reorder(Nextclade.clade, Nextclade.clade, length), fill = Nextclade.clade)) +
+#   geom_bar(width = 1) +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+#   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+#   xlab("Nextclade lineage") +
+  #geom_text(stat = 'count', aes(label=..count..), vjust=0) +
+  #coord_flip() +
+#  facet_wrap(Month.of.Collection~Year.of.Collection)
+```
