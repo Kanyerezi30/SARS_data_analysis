@@ -240,3 +240,35 @@ ggplot(yearndg, aes(x = Gender, fill = Nextclade.clade)) +
   #geom_text(stat = 'count', aes(label=..count..), vjust=0)
   #coord_flip() +
 ```
+
+# Patient status
+
+## Pango lineage by Patient status
+
+```{r pangstat, echo=FALSE, message=FALSE, warning=FALSE}
+status <- data1 # create a copy of the data
+status$Patient.Status[status$Patient.Status == "unknown"] <- "LIVE" # convert the unknown patient status to "LIVE"
+# status <- filter(data1, Patient.Status != "unknown")
+yearps <- filter(status, Pangolian.lineage != "Unassigned") # remove samples whose pangolin lineage are unassigned
+yearps$Patient.Status <- toupper(yearps$Patient.Status) # convert the patient  status to upper case
+yearps <- filter(yearps, Month.of.Collection == "Jun" | Month.of.Collection == "July") # retain only samples colected in june and july
+
+# yearpdg$Gender[yearpdg$Gender == "FEMALE "] <- "FEMALE"
+# yearpdg$Gender[yearpdg$Gender == "MALE "] <- "MALE"
+
+# yearpd <- filter(yearpd, District.of.collection != "UNKNOWN")
+# yearpd$District.of.collection[yearpd$District.of.collection == "KAMPLA"] <- "KAMPALA"
+
+# yearpd$District.of.collection[yearpd$District.of.collection == "JINJA "] <- "JINJA"
+# yearp$Month.of.Collection[yearp$Month.of.Collection == "JUN"] <- "JUNE"
+
+ggplot(yearps, aes(x = Pangolian.lineage, fill = Patient.Status)) +
+  geom_bar(position = "fill", width = 0.9) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  xlab("Pango lineage") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  ylab("Percentage")
+  #geom_text(stat = 'count', aes(label=..count..), vjust=0)
+  #coord_flip() +
+```
